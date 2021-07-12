@@ -1,0 +1,44 @@
+﻿@*Aici am layout-ul aplicației, în special bara de navigare din marginea de sus a site-ului*@
+<!DOCTYPE html>
+<html>
+<head>
+    @*Titlul paginii în bara de navigare de tab-uri*@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Biblioteca mea</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    @*Bara de navigare a aplicației ce persistă pe fiecare pagină din aplicație (navbar-FIXED-top)*@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            @*Butonul de "Home" al aplicației care ne întoarce la Indexul view-ului Home, unde avem pagina principală a site-ului*@
+            @Html.ActionLink("Biblioteca mea", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            
+             @*Lista cu cele 3 butoane (mai degrabă link-uri) din bara de navigare*@
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Literatură", "Index", "Carti")</li> @*Butonul acesta mă duce la Index care conține cărțile literare din baza de date*@
+                    <li>@Html.ActionLink("Non-Literatură", "Index2", "Carti")</li> @*Butonul acesta mă duce la Index2 care conține cărțile nonliterare din baza de date*@
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li> @*Butonul acesta mă duce pe pagina de Contact a aplicației (view-ul Contact.cshtml din Home)*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    @*Afișez data curentă sub ultimul container de pe pagina pe care mă aflu*@
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Day.@DateTime.Now.Month.@DateTime.Now.Year </p>
+        </footer>
+    </div>
+    @*Obligatorii ca să funcționeze cum trebuie aplicația!*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

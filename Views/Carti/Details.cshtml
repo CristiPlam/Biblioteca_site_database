@@ -1,0 +1,92 @@
+﻿@model Atestat2._0.Models.Modele.Carti
+@{
+    ViewBag.Title = "Details";
+}
+@*Setez imaginea de fundal și încadrez conținutul paginii într-un panel-body pe stânga paginii (poziția default pentru panel-body)*@
+<body style="background-image: url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'); background-repeat: no-repeat; background-size: cover ">
+    <div class="panel-body" ; style="background-color: rgba(240,255,255,0.95)">
+        @*Afișez titlul cărții*@
+        <h2>@Model.Titlu</h2>
+
+        @*Afișez imaginea cu coperta cărții*@
+        @if (Model.image_link != null)
+        {
+            <br />
+            <p>
+                <img src="@Model.image_link" width="220" height="300" />
+
+            </p>
+        }
+
+        @*Afișez autorul cărții*@
+        @Html.Label("Autor", "Autor:")
+        <br />
+        <p>@Model.Autor</p>
+
+        @*Afișez numele editurii cărții, dacă există*@
+        @if (Model.Editura != null)
+        {
+            @Html.Label("Editura", "Editura:")
+            <br />
+            <p>@Model.Editura.Nume</p>
+        }
+
+        @*Afișez numărul de pagini al cărții, dacă acesta e diferit de 0*@
+        @if (Model.Nr_pagini != 0)
+        {
+            @Html.LabelFor(b => b.Nr_pagini, "Numar de pagini:")
+            <p>@Model.Nr_pagini</p>
+        }
+
+
+        @*Pentru afișarea descrierii cărții mai fac un panel-body în care să încapă descrierea cărții*@
+        @*Dacă cartea nu are descriere, atunci pe ecran va apărea mesajul de mai jos*@
+        @Html.Label("Descriere", "Descriere:")
+        <br />
+        <div class="panel-body">
+            @if (Model.Descriere.IsEmpty())
+            {
+                <p>Cartea aceasta nu are o descriere</p>
+            }
+            else
+            {
+                <p>@Model.Descriere</p>
+            }
+        </div>
+
+        @*Afișez genurile cărții sub formă de listă neordonată (cu buline)*@
+        @if (Model.Genuri.Count > 0)
+        {
+            @Html.Label("Genuri", "Genuri:")
+            <br />
+            <ul>
+                @foreach (var gen in Model.Genuri)
+                {
+                    <li>@gen.Nume</li>
+                }
+            </ul>
+        }
+
+        @*Afișez tipul copertei cărții*@
+        @if (Model.Tip_carte != null)
+        {
+            @Html.Label("Tip_carte", "Tip coperta:")
+            <br />
+            <p>@Model.Tip_carte.Nume</p>
+            <br />
+        }
+
+        @*Dacă administratorul este logat atunci el are posibiliatea de a avea butonul de ștergere a cărții curente din baza de date (și implicit de pe site)*@
+        <br />
+        @using (Html.BeginForm(actionName: "Delete", controllerName: "Carti", method: FormMethod.Post, routeValues: new { id = Model.CarteId }))
+        {
+            if (this.User.IsInRole("Admin"))
+            {
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button style="margin-right:5px" class="btn btn-primary col-lg" type="submit">Șterge cartea</button> @*Odată apăsat butonul, el apelează funcția Delete din
+                                                                                                                        CartiController și șterge cartea din bd, iar apoi întoarce
+                                                                                                                        utilizatorul pe pagina cu lista de cărți*@
+            }
+        }
+    </div>
+</body>

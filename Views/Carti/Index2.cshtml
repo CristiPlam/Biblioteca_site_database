@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Cărți nonliterare";
+}
+
+<div class="panel panel-default" style="text-align:center">
+    <div class="panel-body" style="background-color:#dbd7cc">
+        <h1><b>@ViewBag.Title</b></h1>
+        <h3>Aici vei găsi tot ce ține de lumea non-ficțională!</h3>
+    </div>
+</div>
+
+    <body style="background-image: url('https://images.unsplash.com/photo-1518336751805-17d4ea1ba5a0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'); background-repeat: no-repeat; background-size: cover ">
+        <div class="container">
+            <div class="row">
+                @if (ViewBag.Carti != null)
+                {
+                    foreach (var carte in ViewBag.Carti)
+                    {
+                        <div class="col-lg-4" style=" margin-top: 50px; text-align: center">
+                            <div class="panel-body" style="background-color: #dbd7cc">
+                                @Html.Label("Title", "Titlu:")
+                                <br />
+                                <p>@carte.Titlu</p>
+
+                                @Html.Label("Autor", "Autor:")
+                                <br />
+                                <p>@carte.Autor</p>
+                                @Html.Label("Price", "Preț:")
+                                <br />
+                                <p>@carte.Pret LEI</p>
+
+                                @using (Html.BeginForm(actionName: "Details", controllerName: "Carti", method: FormMethod.Get,
+                                    routeValues: new { id = carte.CarteId }))
+                                {
+                                    <button style="margin-right:5px; text-align: center" class="btn btn-primary col-lg" type="submit">
+                                        Detalii
+                                    </button>
+                                }
+
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <br />
+
+        @using (Html.BeginForm(actionName: "New", controllerName: "Carti", method: FormMethod.Get))
+        {
+            if (this.User.IsInRole("Admin"))
+            {
+                <p><b>Admin Actions</b></p>
+                <div class="col-lg-2">
+                    <button style="margin-right:5px; text-align: center" class="btn btn-primary col-lg" type="submit">Adauga o carte</button>
+                </div>
+            }
+
+        }
+    </body>

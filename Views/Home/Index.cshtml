@@ -1,0 +1,24 @@
+﻿@*Pagina principală a aplicației*@
+@{
+    ViewBag.Title = "Home Page";
+}
+@*Adaug o imagine de fundal paginii web*@
+<body style="background-image: url('https://images.unsplash.com/photo-1554896541-dff010081afe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1949&q=80'); background-repeat: no-repeat; background-size: cover ">
+    @*În acest div scriu textul ce se afișează pe pagină*@
+    <div class="jumbotron">
+        <h1>Bine ai venit în biblioteca mea!</h1>
+        <p class="lead">Aici vei găsi cărți din toate domeniile posibile, de la Science Fiction până la cărți despre gătit.</p>
+        <p>Cărțile au fost împărțite în două categorii: cărți literare și non-literare.</p>
+        <p>Dacă dorești să vezi mai multe detalii despre o carte, te rog să îți faci un cont pe site-ul meu pentru a avea parte de acest beneficiu.</p>
+        <p>Dacă ți-a plăcut vreo carte, atunci te aștept în librărie să o achiziționezi la adresa din secțiunea "Contact".</p>
+        <p>
+            @*Buton care mă direcționează spre Index al lui CartiController, care conține cărțile literare din baza de date*@
+            @using (Html.BeginForm(actionName: "Index", controllerName: "Carti", method: FormMethod.Get))
+            {
+                <button style="margin-right:5px" class="btn btn-primary col-lg" type="submit">
+                    Să începem! &raquo; @*&raquo; este codul pentru ">>"*@
+                </button>
+            }
+            </p>
+    </div>
+</body>

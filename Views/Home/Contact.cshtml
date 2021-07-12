@@ -1,0 +1,24 @@
+﻿@*Pagina de Contact a aplicației*@
+@{
+    ViewBag.Title = "Contact";
+}
+@*Îi setez o imagine de fundal și îi afișez titlul, adică Contact*@
+<body style="background-image: url('https://images.unsplash.com/photo-1594848398416-e7940ec7cff8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80'); background-repeat: no-repeat; background-size: cover ">
+
+    <h2>@ViewBag.Title</h2>
+
+    @*Afișez adresa librăriei, programul ei și datele de contact social media*@
+    <address>
+        Splaiul Independenței 290<br />
+        București, România<br />
+        <abbr title="Phone">Telefon: </abbr>
+        0735 028 441
+    </address>
+
+    <address>
+        <strong>Program: </strong><p>10:00-18:00 Luni-Vineri</p>
+                                  <p>10:00-16:00 Sâmbătă-Duminică</p>
+        <strong>Adresă mail: </strong>   <a href="mailto:Support@example.com">biblioteca_mea@gmail.com</a><br />
+        <strong>Social Media: </strong> <a href="mailto:Marketing@example.com">https://www.instagram.com/biblioteca_mea/</a>
+    </address>
+</body>

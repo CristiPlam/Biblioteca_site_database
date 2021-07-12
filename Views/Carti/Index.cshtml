@@ -1,0 +1,66 @@
+﻿@*Pagina web în care se afișează cărțile literare*@
+@{
+    ViewBag.Title = "Cărți literare";
+}
+@*Setez imaginea de fundal și centrez textul de la titlu*@
+<body style="background-image: url('https://images.unsplash.com/photo-1544640808-32ca72ac7f37?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'); background-repeat: no-repeat; background-size: cover ">
+    <div class="panel panel-default" style="text-align:center">
+        <div class="panel-body" style="background-color:#dbd7cc">
+            <h1><b>@ViewBag.Title</b></h1>
+            <h3>Aici vei găsi tot ce ține de lumea ficțiunii!</h3>
+        </div>
+    </div>
+
+    @*Pe pagină se vor afișa cărțile pe câte 3 coloane (class = "col-lg-4")*@
+    <div class="container">
+        <div class="row">
+            @if (ViewBag.Carti != null)
+            {
+                foreach (var carte in ViewBag.Carti)
+                {
+                    <div class="col-lg-4" style=" margin-top: 50px; text-align: center">
+                        <div class="panel-body" style="background-color: #dbd7cc">
+                            @*Afișez toate câteva din datele cărții*@
+                            @Html.Label("Title", "Titlu:")
+                            <br />
+                            <p>@carte.Titlu</p>
+
+                            @Html.Label("Autor", "Autor:")
+                            <br />
+                            <p>@carte.Autor</p>
+                            @Html.Label("Price", "Preț:")
+                            <br />
+                            <p>@carte.Pret LEI</p>
+
+                            @*Pentru a afișa detalii despre o carte, adaug un buton pe pagină care mă va redirecționa pe View-ul cu numele acțiunii de mai jos din CartiController*@
+                            @*Html.BeginForm va genera un formular pe o pagină nouă care va folosi View-ul Details pentru a vedea mai multe detalii despre o carte*@
+                            @using (Html.BeginForm(actionName: "Details", controllerName: "Carti", method: FormMethod.Get, routeValues: new { id = carte.CarteId }))
+                            {
+                                <button style="margin-right:5px; text-align: center" class="btn btn-primary col-lg" type="submit">
+                                    Detalii
+                                </button>
+                            }
+
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <br />
+
+    @*Generez un formular pe o pagină nouă în care se va putea adăuga o carte direct din interfața grafică*@
+    @*Acest formular redirectionează spre View-ul New în care am interfața grafică pentru adăugarea dateleor despre o carte*@
+    @using (Html.BeginForm(actionName: "New", controllerName: "Carti", method: FormMethod.Get))
+    {
+        @*Dacă administratorul este logat, atunci pentru el este vizibil pe pagina butonul de adaugare a unei cărți noi*@
+        if (this.User.IsInRole("Admin"))
+        {
+            <div class="col-lg-2">
+                <button style="margin-right:5px; text-align: center" class="btn btn-primary col-lg" type="submit">Adauga o carte</button>
+            </div>
+        }
+
+    }
+</body>

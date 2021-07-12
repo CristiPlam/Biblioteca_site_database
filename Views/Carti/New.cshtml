@@ -1,0 +1,81 @@
+﻿@model Atestat2._0.Models.Modele.Carti
+@{
+    ViewBag.Title = "Adauga o carte";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Carti", method: FormMethod.Post))
+{
+    @Html.Label("Titlu", "Titlu:")
+    <br />
+    @Html.TextBoxFor(b => b.Titlu, null, new { placeholder = "Introdu titlul cartii", @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.Titlu, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Autor", "Autor:")
+    <br />
+    @Html.TextBoxFor(b => b.Autor, null, new { placeholder = "Introdu numele autorului cartii", @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.Autor, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Image", "Link pentru poza cărții:")
+    <br />
+    @Html.TextBoxFor(b => b.image_link, null, new { placeholder = "Introdu link-ul pentru imaginea cărții", @class = "form-control" })
+    <br />
+
+    @Html.Label("Nr_pagini", "Numarul de pagini:")
+    <br />
+    @Html.TextBoxFor(b => b.Nr_pagini, null, new { placeholder = "Introdu numarul de pagini al cartii", @class = "form-control", @type = "number" })
+    @Html.ValidationMessageFor(b => b.Nr_pagini, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Descriere", "Descriere:")
+    <br />
+    @Html.TextArea("Descriere", null, new { placeholder = "Introdu descrierea cartii", @class = "form-control", @rows = "10" })
+    @Html.ValidationMessageFor(b => b.Descriere, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Categorie", "Categoria cărții:")
+    <br />
+    @Html.TextBoxFor(b => b.Categorie, null, new { placeholder = "Introdu 'literatura' sau 'non-literatura'", @class = "form-control" })
+    <br />
+
+    @Html.Label("Tip_coperta", "Coperta:")
+    <br />
+    @Html.DropDownListFor(b => b.Tip_carte_id, new SelectList(Model.Coperti_List, "Value", "Text"), "Alege o coperta", new { @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.Tip_carte_id, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("Editura", "Editura:")
+    <br />
+    @Html.DropDownListFor(b => b.Editura_id, new SelectList(Model.Edituri_List, "Value", "Text"), "Alege o editura", new { @class = "form-control" })
+    @Html.ValidationMessageFor(b => b.Editura_id, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("Pret", "Preț:")
+    <br />
+    @Html.TextBoxFor(b => b.Pret, null, new { placeholder = "Introdu prețul cărții", @class = "form-control", @type = "number" })
+    @Html.ValidationMessageFor(b => b.Pret, "", new { @class = "text-danger" })
+    <br />
+
+
+    @Html.LabelFor(b => b.Genuri_List, "Alege genurile cărții:")
+    <br />
+    for (int i = 0; i < Model.Genuri_List.Count(); i++)
+    {
+        @Html.HiddenFor(b => b.Genuri_List[i].Id)
+        @Html.HiddenFor(b => b.Genuri_List[i].Nume)
+        @Html.CheckBoxFor(b => b.Genuri_List[i].Checked)
+        @Html.DisplayFor(b => b.Genuri_List[i].Nume)
+        <br />
+    }
+
+    <br />
+    <button class="btn btn-primary" type="submit">Adaugă</button>
+}
+
+
+
